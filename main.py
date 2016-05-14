@@ -21,7 +21,6 @@ ACTION_CHOICE_X = [20, 250, 500]
 HEALTH_TEXT_X = [20, 500]
 HEALTH_TEXT_Y = 100
 
-
 class Sprite(pygame.sprite.Sprite):
     def __init__(self, filename):
         super(Sprite,self).__init__()
@@ -37,7 +36,7 @@ class Sprite(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
 
 pygame.init()
- 
+
 size = (700, 500)
 screen = pygame.display.set_mode(size)
 pygame.display.set_caption("CS1122 Project")
@@ -74,11 +73,6 @@ state 4: player 2 turn
 """
 state = 0
 
-rect_x_pos = 50
-rect_y_pos = 50
-rect_x_vel = 3
-rect_y_vel = 1
-
 #ball = Sprite("mageIdle.png")
 #spriteList.add(ball)
 font = pygame.font.SysFont('Calibri', 30, False, False)
@@ -99,29 +93,29 @@ while not done:
         if key[pygame.K_RETURN] or key[pygame.K_SPACE]:
             state = 1
 
-        rect_x_pos += rect_x_vel
-        rect_y_pos += rect_y_vel
-        if rect_y_pos> 500 or rect_y_pos < 0:
-            rect_y_vel = rect_y_vel * -1
-        if rect_x_pos > 700 or rect_x_pos < 0:
-            rect_x_vel = rect_x_vel * -1
+        #rect_x_pos += rect_x_vel
+        #rect_y_pos += rect_y_vel
+        #if rect_y_pos> 500 or rect_y_pos < 0:
+        #    rect_y_vel = rect_y_vel * -1
+        #if rect_x_pos > 700 or rect_x_pos < 0:
+        #    rect_x_vel = rect_x_vel * -1
         
-        ball.rect.x = rect_x_pos
-        ball.rect.y = rect_y_pos
+        #ball.rect.x = rect_x_pos
+        #ball.rect.y = rect_y_pos
 
     # ------- player 1 class select ---------
     if state == 1:
         if key[pygame.K_1]:
             player1Class = 0
-            classes[player1Class].image = pygame.transform.flip(classes[player1Class].image, True, False)
+            #classes[player1Class].image = pygame.transform.flip(classes[player1Class].image, True, False)
             state = 2
         elif key[pygame.K_2]:
             player1Class = 1
-            classes[player1Class].image = pygame.transform.flip(classes[player1Class].image, True, False)
+            #classes[player1Class].image = pygame.transform.flip(classes[player1Class].image, True, False)
             state = 2
         elif key[pygame.K_3]:
             player1Class = 2
-            classes[player1Class].image = pygame.transform.flip(classes[player1Class].image, True, False)
+            #classes[player1Class].image = pygame.transform.flip(classes[player1Class].image, True, False)
             state = 2
 
     # ------- player 2 class select ---------
@@ -226,12 +220,12 @@ while not done:
                 state = 3
             
     # --------- reset -----------
-    if key[pygame.K_ESCAPE]:
-        state = 0
+    #if key[pygame.K_ESCAPE]:
+    #    state = 0
             
-    #mage.frameUpdate()
-    #warrior.frameUpdate()
-    #rogue.frameUpdate()
+    mage.updateFrame()
+    rogue.updateFrame()
+    warrior.updateFrame()
  
 # --------------------------------------------------------------
     screen.fill(WHITE)
@@ -244,7 +238,8 @@ while not done:
         trophy.rect.x = 20
         trophy.rect.y = 100
 
-        text = font.render("Player 2 has won the fight!", True, BLACK)
+        font = pygame.font.SysFont('Calibri', 30, True, False)
+        text = font.render("Player 2 has won the match!", True, BLACK)
         screen.blit(text, [300, 200])
         spriteList.add(trophy)
 
@@ -255,36 +250,23 @@ while not done:
         #trophy = pygame.transform.scale(trophy, (240, 240))
         trophy.rect.x = 20
         trophy.rect.y = 100
-
-        text = font.render("Player 1 has won the fight!", True, BLACK)
+        
+        font = pygame.font.SysFont('Calibri', 30, True, False)
+        text = font.render("Player 1 has won the match!", True, BLACK)
         screen.blit(text, [300, 200])
         spriteList.add(trophy)
 
         spriteList.draw(screen)
         
     if state == 0:
-
-        #hollow rectangle
-        #pygame.draw.rect(screen, BLACK, [20, 20, 250, 100])
-        #solid rectangle
-        #pygame.draw.rect(screen, BLUE, [rect_x_pos, rect_y_pos, 50, 50])
-        #pygame.draw.rect(screen, RED, [rect_x_pos + 10, rect_y_pos + 10, 30, 30])
-        spriteList.add(ball)
-    
-
-        
-        #circle, point radius
-        pygame.draw.circle(screen, BLUE, [500, 300], 100)
-        
-        #pygame.draw.ellipse(screen, BLACK, [20, 20, 250, 100], 2)
-        #pygame.draw.polygon(screen, BLACK, [[100, 100], [0, 200], [200, 200]], 5)
-        #pygame.draw.ellipse(screen, RED, [300, 10, 50, 20])
-
         #                           font, size, bold, italics
-        font = pygame.font.SysFont('Calibri', 25, False, False)
-        text = font.render("Insert Text Here", True, WHITE)
+        font = pygame.font.SysFont('Calibri', 50, True, False)
+        text = font.render("VERY FANCY TITLE SCREEN!!!", True, BLACK)
+        font = pygame.font.SysFont('Calibri', 30, False, False)
+        text2 = font.render("press enter to continue", True, BLACK)
         #text coordinates are NOT centered
-        screen.blit(text, [500, 550])
+        screen.blit(text, [80, 150])
+        screen.blit(text2, [200, 250])
 
         spriteList.draw(screen)
 
@@ -303,7 +285,7 @@ while not done:
 
         spriteList.draw(screen)
 
-        # drawing UI
+        # drawing UI        
         pygame.draw.rect(screen, BLACK, [0, 350, 700, 500])
         pygame.draw.rect(screen, WHITE, [5, 355, 690, 140])
         font = pygame.font.SysFont('Calibri', 22, False, False)
@@ -377,6 +359,7 @@ while not done:
             p2.rect.y -= 50
         spriteList.add(p2)
 
+        classes[player1Class].image = pygame.transform.flip(classes[player1Class].image, True, False)
         spriteList.draw(screen)
 
         # UI
@@ -420,6 +403,7 @@ while not done:
             p2.rect.y -= 50
         spriteList.add(p2)
 
+        classes[player1Class].image = pygame.transform.flip(classes[player1Class].image, True, False)
         spriteList.draw(screen)
 
         # UI
@@ -449,9 +433,9 @@ while not done:
         screen.blit(pastActionText, [TEXT_XPOS, TEXT_YPOS[2]])
         
 
-    stateText = font.render("State {0}".format(state), True, GRAY)
-    screen.blit(stateText, [0,0])
-
+    #stateText = font.render("State {0}".format(state), True, GRAY)
+    #screen.blit(stateText, [0,0])
+    
     # --------------- check for winner ---------------------
     if not classes[player1Class].alive:
         state = -2
